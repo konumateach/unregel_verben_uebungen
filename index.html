@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ドイツ語 不規則変化動詞 学習ポータル</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* Layout: 4 cumulative columns (base → +insep → +sep → +regular), 3 level rows; stacks per column on phones */
+:root {
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --fg: #1d2430;
+  --muted: #5d6878;
+  --line: #d8dee7;
+  --accent: #234b74;
+  --accent-fg: #ffffff;
+  --tint1: #e7eef6;
+  --tint2: #dbe6f1;
+  --tint3: #cfdeec;
+  --tint4: #e9e6f3;
+  --display: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141922; --surface: #1c2330; --fg: #e6ebf2; --muted: #9aa6b8; --line: #2e3848;
+    --accent: #6a98cc; --accent-fg: #0b111a;
+    --tint1: #1f2938; --tint2: #22304a; --tint3: #263755; --tint4: #2a2a45;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141922; --surface: #1c2330; --fg: #e6ebf2; --muted: #9aa6b8; --line: #2e3848;
+  --accent: #6a98cc; --accent-fg: #0b111a;
+  --tint1: #1f2938; --tint2: #22304a; --tint3: #263755; --tint4: #2a2a45;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-block: 32px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+header h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  margin: 0 0 4px;
+  text-wrap: balance;
+}
+header p { margin: 0 0 28px; color: var(--muted); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.col { display: grid; grid-template-rows: auto repeat(3, 1fr); gap: 12px; min-width: 0; }
+.col-head {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  letter-spacing: 0.03em;
+}
+.col-head small { display: block; font-family: var(--body); font-weight: 400; font-size: 0.75rem; opacity: 0.85; letter-spacing: 0; }
+.cell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.col:nth-child(1) .cell { border-top: 4px solid var(--tint1); }
+.col:nth-child(2) .cell { border-top: 4px solid var(--tint2); }
+.col:nth-child(3) .cell { border-top: 4px solid var(--tint3); }
+.col:nth-child(4) .cell { border-top: 4px solid var(--tint4); }
+.lv { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.lv h2 { font-family: var(--display); font-size: 1.25rem; margin: 0; font-weight: 700; }
+.count { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.desc { margin: 0; color: var(--muted); font-size: 0.82rem; line-height: 1.5; flex: 1; }
+.btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.92rem;
+  padding: 9px 6px;
+  border-radius: 7px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  transition: background .15s, color .15s;
+}
+.btn:hover, .btn:focus-visible { background: var(--accent); color: var(--accent-fg); }
+.btn:focus-visible { outline: 3px solid var(--tint3); outline-offset: 2px; }
+.tabs { display: flex; gap: 0; border-bottom: 2px solid var(--accent); margin-bottom: 8px; }
+.tab {
+  font-family: var(--display); font-weight: 700; font-size: 1.05rem;
+  padding: 10px 28px; border: 1px solid var(--line); border-bottom: none;
+  border-radius: 8px 8px 0 0; background: var(--surface); color: var(--muted);
+  cursor: pointer; margin-right: 4px;
+}
+.tab.on { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.tab:focus-visible { outline: 3px solid var(--tint3); outline-offset: 2px; }
+.mode-note { margin: 0 0 18px; color: var(--muted); font-size: 0.88rem; }
+.btn.off { border-color: var(--line); color: var(--muted); background: transparent; pointer-events: none; }
+footer { margin-top: 28px; color: var(--muted); font-size: 0.82rem; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ドイツ語 不規則変化動詞 学習ポータル</h1>
+    <p>上のタブで「練習カード」か「テスト」を選び、レベルのボタンを押してください。右の列ほど動詞が増えていきます。</p>
+  </header>
+  <div class="tabs" role="tablist">
+    <button type="button" class="tab" id="tab-card" role="tab" data-mode="card">練習カード</button>
+    <button type="button" class="tab" id="tab-test" role="tab" data-mode="test">テスト</button>
+  </div>
+  <p class="mode-note" id="modeNote"></p>
+  <main class="grid" id="grid"></main>
+  <footer>各レベルの語数は収録している動詞の数です。</footer>
+</div>
+<script>
+// local: このフォルダ内のファイル / art: 公開版（claude.ai アーティファクト）
+var COLS = [
+  { head: "基礎動詞のみ", sub: "レベル１〜３", levels: [
+    { n: 1, words: 49,  desc: "基本の不規則動詞",
+      card: ["BCeXsPGRE5coHnjVRJvTaA"],
+      test: ["QKDdo6T8kQ3rYcFrAkV7Kg"] },
+    { n: 2, words: 63,  desc: "変化のパターンでまとめた不規則動詞",
+      card: ["DfGHrZkCxhzXeWhiVUX2u5"],
+      test: ["EN4wXy7iVpPCAnJoFVojaf"] },
+    { n: 3, words: 125, desc: "拡張版の不規則動詞（話法の助動詞を含む）",
+      card: ["W7rgK3G2EbdYummyvbRXhM"],
+      test: ["4Ysxdz1YzmjgJcsUUXHM9M"] } ] },
+  { head: "+非分離動詞", sub: "レベル４〜６", levels: [
+    { n: 4, words: 83,  desc: "レベル１＋非分離動詞",
+      card: ["Nhx37i5Fo9ADE2AN5brqug"],
+      test: ["QybG7PjM91nmpMED7SvC9B"] },
+    { n: 5, words: 114, desc: "レベル２＋非分離動詞",
+      card: ["2zEx2sqZAwQrg7nt5b8XPB"],
+      test: ["SWtuoauWMNyWo6CqWkjGBe"] },
+    { n: 6, words: 224, desc: "レベル３＋非分離動詞",
+      card: ["UpxwuUCxUwJyg3VH9yHV1X"],
+      test: ["Y59bupfq8SR1Ec5i2x4H92"] } ] },
+  { head: "+分離動詞", sub: "レベル７〜９", levels: [
+    { n: 7, words: 121, desc: "レベル４＋分離動詞",
+      card: ["SeF3dAx1r8qVjrCq5mTrq2"],
+      test: ["HurM6K8EEGXTsA3rhR3CmR"] },
+    { n: 8, words: 149, desc: "レベル５＋分離動詞",
+      card: ["UYVdwzZ16Yr2bvGfEZ7Ma5"],
+      test: ["Qc4LGbv47ut5xBjWCpsjVF"] },
+    { n: 9, words: 322, desc: "レベル６＋分離動詞",
+      card: ["79a9HySAoeCBeVDhKa2kCR"],
+      test: ["LtR6LDsA5VRL6j75EgzDea"] } ] },
+  { head: "+規則動詞", sub: "レベル１０〜１２", levels: [
+    { n: 10, words: 136, desc: "レベル７＋まぎらわしい規則動詞",
+      card: ["9iZPJtmPhsARfXHTMQNGNz"],
+      test: ["1QBw1bZv8Y4bKyv64vaBBy"] },
+    { n: 11, words: 177, desc: "レベル８＋まぎらわしい規則動詞",
+      card: ["N9KxH9TZsJGzPFVPgnaRNn"],
+      test: ["VGJoCStmkPhpEf44b3eadi"] },
+    { n: 12, words: 358, desc: "レベル９＋まぎらわしい規則動詞",
+      card: ["W7buwmbmzXY4n45sPnrPhg"],
+      test: ["6Ayvshp2gXsa8eWVrnwhcq"] } ] }
+];
+var ZEN = "０１２３４５６７８９";
+function zen(n) { return String(n).replace(/\d/g, function (d) { return ZEN[d]; }); }
+var host = location.hostname || "";
+var ONLINE = /claude|anthropic/.test(host);
+
+var MODES = {
+  card: { label: "練習カード", file: "unregel_verben_uebung_lv", note: "カードを1枚ずつめくって覚えます" },
+  test: { label: "テスト", file: "unregel_verben_test_lv", note: "10問のテストを作って答え合わせします" }
+};
+var mode = "card";
+try { if (localStorage.getItem("portalMode") === "test") mode = "test"; } catch (e) {}
+
+function link(l) {
+  var a = document.createElement("a");
+  a.className = "btn";
+  a.textContent = MODES[mode].label + "を開く";
+  var id = l[mode][0];
+  var href = ONLINE ? (id ? "https://claude.ai/artifact/" + id : null) : MODES[mode].file + l.n + ".html";
+  if (href) {
+    a.href = href;
+    if (ONLINE) { a.target = "_blank"; a.rel = "noopener"; }
+  } else {
+    a.classList.add("off");
+    a.setAttribute("aria-disabled", "true");
+    a.textContent = "まだ公開されていません";
+  }
+  return a;
+}
+
+var grid = document.getElementById("grid");
+function render() {
+  grid.innerHTML = "";
+  document.querySelectorAll(".tab").forEach(function (t) {
+    var on = t.dataset.mode === mode;
+    t.classList.toggle("on", on);
+    t.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  document.getElementById("modeNote").textContent = MODES[mode].note;
+  COLS.forEach(function (c) {
+    var col = document.createElement("section");
+    col.className = "col";
+    var h = document.createElement("div");
+    h.className = "col-head";
+    h.innerHTML = c.head + "<small>" + c.sub + "</small>";
+    col.appendChild(h);
+    c.levels.forEach(function (l) {
+      var cell = document.createElement("div");
+      cell.className = "cell";
+      cell.innerHTML = '<div class="lv"><h2>レベル' + zen(l.n) + '</h2><span class="count">' + l.words + ' 語</span></div>' +
+        '<p class="desc">' + l.desc + '</p>';
+      cell.appendChild(link(l));
+      col.appendChild(cell);
+    });
+    grid.appendChild(col);
+  });
+}
+document.querySelectorAll(".tab").forEach(function (t) {
+  t.addEventListener("click", function () {
+    mode = t.dataset.mode;
+    try { localStorage.setItem("portalMode", mode); } catch (e) {}
+    render();
+  });
+});
+render();
+</script>
+</body>
+</html>
